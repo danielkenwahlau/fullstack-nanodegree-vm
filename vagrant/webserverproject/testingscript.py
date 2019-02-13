@@ -24,3 +24,12 @@ allResults = session.query(Restaurant).all()
 
 for entry in allResults:
     print(type(str(entry.name)))
+
+x = [1,2,3]
+print(x[2])
+
+
+specific_result = session.query(Restaurant).filter_by(id = 1).first()
+
+# for element in specific_result:
+print specific_result.name

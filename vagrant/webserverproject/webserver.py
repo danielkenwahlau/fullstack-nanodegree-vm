@@ -71,7 +71,41 @@ class webserverHandler(BaseHTTPRequestHandler):
                     output += "<h2>"
                     output += str(entry.name)
                     output += "</h2>"
+
+                    #get insert restaurant  id just before edit
+                    output += "<a href = '" 
+                    output += str(entry.id)
+                    output += "/edit'> go to edit page</a>"
                 
+
+                #add link that leads to new page such as edit.
+                output += "</body></html>"
+                self.wfile.write(output) #sends back to client
+                print(output)
+            
+            #needs to have some way of remembering the id that you want to delete
+            if self.path.endswith("/edit"):
+                self.send_response(200)
+                self.send_header('Content-type', 'text/html')
+                self.end_headers()
+
+                #process the id before the edit
+                #str split on '/'. this should be self.path
+                rest_id = int(self.path.split('/')[1])
+                #grab the second to last element
+                #use that element to index into the database
+                #retrive name by using filter_by
+
+                rest_query = session.query(Restaurant).filter_by(id = rest_id).first()
+                print("Rest Id", rest_id, "rest naeme: ", rest_query.name)
+
+
+                print(self.path)
+
+                output = ""
+                output += "<html><body>"
+                output += "Hello you've reached the edit page for "
+                output += rest_query.name
                 output += "</body></html>"
                 self.wfile.write(output) #sends back to client
                 print(output)
